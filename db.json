@@ -1,0 +1,37 @@
+{
+  "categories": [
+    {
+      "id": "heOxCfJzFls",
+      "libelle": "laitier"
+    },
+    {
+      "id": "0sXh50g9xb0",
+      "libelle": "informatique"
+    },
+    {
+      "id": "eMWmIl_x6eU",
+      "libelle": "ngd"
+    }
+  ],
+  "produits": [
+    {
+      "id": "vb1BzZLwES0",
+      "libelle": "nnn",
+      "prix": 12,
+      "quantite": 12,
+      "categorieId": "0sXh50g9xb0",
+      "imageUrl": "https://res.cloudinary.com/dduq39adm/image/upload/v1781652518/yckiavy6ivfzb6vokff3.png",
+      "imagePublicId": "yckiavy6ivfzb6vokff3"
+    },
+    {
+      "id": "QXiU3OBoy64",
+      "libelle": "nnnnnnnn",
+      "prix": 10000,
+      "quantite": 10,
+      "categorieId": "0sXh50g9xb0",
+      "imageUrl": "https://res.cloudinary.com/dduq39adm/image/upload/v1781791765/sq3ell2ytgylaldrltg6.jpg",
+      "imagePublicId": "sq3ell2ytgylaldrltg6"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
