@@ -5,10 +5,10 @@ import { showToast } from "../components/toast.js";
 import { escapeHtml } from "../utils/html.js";
 import { navigate } from "../router.js";
 import {
-  createFournisseurs,
-  deleteFournisseurs,
-  getFournisseurs,
-  updateFournisseurs,
+  createfournisseurs,
+  deletefournisseurs,
+  getfournisseurs,
+  updatefournisseurs,
 } from "../services/fournisseurService.js";
 // import { getCategories } from "../services/categorieService.js";
 // import { uploadProductImage } from "../services/cloudinaryService.js";

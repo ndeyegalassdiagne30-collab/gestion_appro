@@ -1,11 +1,12 @@
 import { showToast } from "./components/toast.js";
 import { renderCategoriesPage } from "./pages/categoriesPage.js";
 import { renderProduitsPage } from "./pages/produitsPage.js";
+import {renderfournisseursPage } from "./pages/fournisseursPage.js"
 
 const routes = {
   categories: renderCategoriesPage,
   produits: renderProduitsPage,
-  fournisseurs: renderFournisseursPage,
+  fournisseurs: renderfournisseursPage,
 };
 
 const titles = {
