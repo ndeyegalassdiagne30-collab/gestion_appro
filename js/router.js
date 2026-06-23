@@ -5,11 +5,13 @@ import { renderProduitsPage } from "./pages/produitsPage.js";
 const routes = {
   categories: renderCategoriesPage,
   produits: renderProduitsPage,
+  fournisseurs: renderFournisseursPage,
 };
 
 const titles = {
   categories: "Catégories",
   produits: "Produits",
+  fournisseurs: "Fournisseurs",
 };
 
 function getPageFromURL() {

@@ -1,6 +1,7 @@
 const NAV_LINKS = [
   { page: "categories", label: "Catégories", icon: "fa-tags" },
   { page: "produits", label: "Produits", icon: "fa-box" },
+  { page: "fournisseurs", label: "Fournisseurs", icon: "fa-truck" },
 
 ];
 
