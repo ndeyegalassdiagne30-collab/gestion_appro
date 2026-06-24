@@ -20,7 +20,7 @@ function fournisseurFormBody(fournisseur, errors = {}) {
       <div class="mb-4">
         <label class="mb-2 block text-xs font-extrabold uppercase tracking-[0.14em] text-slate-500" for="fournisseurNom">Nom *</label>
         <input class="w-full rounded-2xl border ${errors.nom ? 'border-rose-500' : 'border-slate-200'} bg-white px-4 py-3 text-sm font-medium text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
-          type="text" id="fournisseurNom" value="${escapeHtml(fournisseur?.nom || "")}" placeholder="ex: Dupont SARL" autocomplete="off" />
+          type="text" id="fournisseurNom" value="${escapeHtml(fournisseur?.nom || "")}" placeholder="ndeye diagne" autocomplete="off" />
         ${errors.nom ? `<p class="mt-1 text-xs font-semibold text-rose-500">${errors.nom}</p>` : ''}
       </div>
 
@@ -28,7 +28,7 @@ function fournisseurFormBody(fournisseur, errors = {}) {
       <div class="mb-4">
         <label class="mb-2 block text-xs font-extrabold uppercase tracking-[0.14em] text-slate-500" for="fournisseurEmail">Email *</label>
         <input class="w-full rounded-2xl border ${errors.email ? 'border-rose-500' : 'border-slate-200'} bg-white px-4 py-3 text-sm font-medium text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
-          type="email" id="fournisseurEmail" value="${escapeHtml(fournisseur?.email || "")}" placeholder="ex: contact@dupont.com" autocomplete="off" />
+          type="email" id="fournisseurEmail" value="${escapeHtml(fournisseur?.email || "")}" placeholder="ndeye@gmail.com" autocomplete="off" />
         ${errors.email ? `<p class="mt-1 text-xs font-semibold text-rose-500">${errors.email}</p>` : ''}
       </div>
 
@@ -46,7 +46,7 @@ function fournisseurFormBody(fournisseur, errors = {}) {
       <div class="mb-4">
         <label class="mb-2 block text-xs font-extrabold uppercase tracking-[0.14em] text-slate-500" for="fournisseurTelephone">Téléphone *</label>
         <input class="w-full rounded-2xl border ${errors.telephone ? 'border-rose-500' : 'border-slate-200'} bg-white px-4 py-3 text-sm font-medium text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
-          type="text" id="fournisseurTelephone" value="${escapeHtml(fournisseur?.telephone || "")}" placeholder="ex: 06 12 34 56 78" autocomplete="off" />
+          type="text" id="fournisseurTelephone" value="${escapeHtml(fournisseur?.telephone || "")}" placeholder="77 000 00 00" autocomplete="off" />
         ${errors.telephone ? `<p class="mt-1 text-xs font-semibold text-rose-500">${errors.telephone}</p>` : ''}
       </div>
 
@@ -54,7 +54,7 @@ function fournisseurFormBody(fournisseur, errors = {}) {
       <div class="mb-4">
         <label class="mb-2 block text-xs font-extrabold uppercase tracking-[0.14em] text-slate-500" for="fournisseurAdresse">Adresse *</label>
         <input class="w-full rounded-2xl border ${errors.adresse ? 'border-rose-500' : 'border-slate-200'} bg-white px-4 py-3 text-sm font-medium text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
-          type="text" id="fournisseurAdresse" value="${escapeHtml(fournisseur?.adresse || "")}" placeholder="ex: 12 rue de la Paix, Paris" autocomplete="off" />
+          type="text" id="fournisseurAdresse" value="${escapeHtml(fournisseur?.adresse || "")}" placeholder="Dakar, Sénégal" autocomplete="off" />
         ${errors.adresse ? `<p class="mt-1 text-xs font-semibold text-rose-500">${errors.adresse}</p>` : ''}
       </div>
 
@@ -62,7 +62,7 @@ function fournisseurFormBody(fournisseur, errors = {}) {
       <div class="mb-4">
         <label class="mb-2 block text-xs font-extrabold uppercase tracking-[0.14em] text-slate-500" for="fournisseurType">Type *</label>
         <input class="w-full rounded-2xl border ${errors.type ? 'border-rose-500' : 'border-slate-200'} bg-white px-4 py-3 text-sm font-medium text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
-          type="text" id="fournisseurType" value="${escapeHtml(fournisseur?.type || "")}" placeholder="ex: Grossiste" autocomplete="off" />
+          type="text" id="fournisseurType" value="${escapeHtml(fournisseur?.type || "")}" placeholder="Grossiste" autocomplete="off" />
         ${errors.type ? `<p class="mt-1 text-xs font-semibold text-rose-500">${errors.type}</p>` : ''}
       </div>
 
