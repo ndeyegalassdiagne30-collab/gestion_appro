@@ -12,6 +12,7 @@ import {
 } from "../services/produitService.js";
 import { getCategories } from "../services/categorieService.js";
 import { uploadProductImage } from "../services/cloudinaryService.js";
+import { isAdmin } from "../services/authService.js";
 
 export function produitFormBody(produit, categories = [], errors = {}) {
   const optionsHtml = categories.map(categorie => `
@@ -185,15 +186,19 @@ export async function renderProduitsPage() {
     categorieMap[cat.id] = cat.libelle;
   });
 
+  const admin = isAdmin();
+
   app.innerHTML = `
     <section>
       ${pageHeader({
         kicker: "Référentiel",
         title: "Produits",
-        subtitle: "Créer, modifier et supprimer les produits de l'application.",
-        actionLabel: "Nouveau produit",
-        actionId: "addProduitBtn",
-        actionIcon: "fa-plus",
+        subtitle: admin
+          ? "Créer, modifier et supprimer les produits de l'application."
+          : "Consultation des produits disponibles.",
+        actionLabel: admin ? "Nouveau produit" : null,
+        actionId: admin ? "addProduitBtn" : null,
+        actionIcon: admin ? "fa-plus" : null,
       })}
 
       <article class="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
@@ -239,7 +244,7 @@ export async function renderProduitsPage() {
             
             {
               label: "Actions",
-              render: (prod) => `
+              render: (prod) => admin ? `
                 <div class="flex flex-wrap gap-2">
                   <button class="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-extrabold text-slate-700 transition hover:bg-slate-50" data-edit="${escapeHtml(prod.id)}">
                     <i class="fa-solid fa-pen"></i>
@@ -250,7 +255,7 @@ export async function renderProduitsPage() {
                     Supprimer
                   </button>
                 </div>
-              `,
+              ` : `<span class="text-xs text-slate-400">Lecture seule</span>`,
             },
           ],
         })}
@@ -258,7 +263,7 @@ export async function renderProduitsPage() {
     </section>
   `;
 
-  bindProduitEvents(produits);
+  if (admin) bindProduitEvents(produits);
 }
 
 function bindProduitEvents(produits) {

@@ -1,7 +1,8 @@
 import { showToast } from "./components/toast.js";
 import { renderCategoriesPage } from "./pages/categoriesPage.js";
 import { renderProduitsPage } from "./pages/produitsPage.js";
-import {renderfournisseursPage } from "./pages/fournisseursPage.js"
+import { renderfournisseursPage } from "./pages/fournisseursPage.js";
+import { isAdmin, isFournisseur } from "./services/authService.js";
 
 const routes = {
   categories: renderCategoriesPage,
@@ -15,9 +16,19 @@ const titles = {
   fournisseurs: "Fournisseurs",
 };
 
+function getDefaultPage() {
+  return isAdmin() ? "categories" : "produits";
+}
+
+function isPageAllowed(page) {
+  if (isAdmin()) return true;
+  if (isFournisseur()) return page === "produits";
+  return false;
+}
+
 function getPageFromURL() {
   const params = new URLSearchParams(window.location.search);
-  return params.get('page') || 'categories';
+  return params.get('page') || getDefaultPage();
 }
 
 function updateURL(page) {
@@ -26,11 +37,17 @@ function updateURL(page) {
   window.history.pushState({ page }, '', url);
 }
 
-export async function navigate(page = "categories") {
+export async function navigate(page) {
+  if (!page) page = getDefaultPage();
+
+  if (!isPageAllowed(page)) {
+    page = getDefaultPage();
+  }
+
   updateURL(page);
-  
+
   const app = document.getElementById("app");
-  const route = routes[page] || routes.categories;
+  const route = routes[page] || routes[getDefaultPage()];
 
   document.querySelectorAll("[data-page]").forEach((button) => {
     const isActive = button.dataset.page === page;
@@ -45,7 +62,7 @@ export async function navigate(page = "categories") {
 
   const navbarTitle = document.getElementById("navbarTitle");
   if (navbarTitle) {
-    navbarTitle.textContent = titles[page] || titles.categories;
+    navbarTitle.textContent = titles[page] || titles[getDefaultPage()];
   }
 
   app.innerHTML = `

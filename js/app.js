@@ -1,6 +1,8 @@
 import { renderSidebar } from "./components/sidebar.js";
-import { renderNavbar } from "./components/navbar.js";
+import { renderNavbar, initNavbarEvents } from "./components/navbar.js";
 import { navigate, initRouter } from "./router.js";
+import { isAuthenticated } from "./services/authService.js";
+import { renderLoginPage } from "./pages/loginPage.js";
 
 function mountLayout() {
   document.getElementById("sidebarRoot").innerHTML = renderSidebar();
@@ -41,7 +43,17 @@ function initNavigation(sidebar) {
 }
 
 function startApp() {
+  if (!isAuthenticated()) {
+    renderLoginPage();
+    return;
+  }
+
+  document.body.className = "min-h-screen bg-slate-100 font-sans text-slate-900";
+  document.querySelector("main").className = "min-h-screen pt-16 lg:pl-72";
+  document.getElementById("app").className = "mx-auto max-w-7xl p-4 sm:p-6 lg:p-8";
+
   mountLayout();
+  initNavbarEvents();
   const sidebar = initSidebar();
   initNavigation(sidebar);
   initRouter();

@@ -1,17 +1,29 @@
-const NAV_LINKS = [
+import { getCurrentUser, isAdmin } from "../services/authService.js";
+
+const ADMIN_LINKS = [
   { page: "categories", label: "Catégories", icon: "fa-tags" },
   { page: "produits", label: "Produits", icon: "fa-box" },
   { page: "fournisseurs", label: "Fournisseurs", icon: "fa-truck" },
+];
 
+const FOURNISSEUR_LINKS = [
+  { page: "produits", label: "Produits", icon: "fa-box" },
 ];
 
 export function renderSidebar() {
-  const items = NAV_LINKS.map((link) => `
+  const user = getCurrentUser();
+  const links = isAdmin() ? ADMIN_LINKS : FOURNISSEUR_LINKS;
+
+  const items = links.map((link) => `
     <button class="nav-link flex items-center gap-3 rounded-2xl px-4 py-3 text-left text-sm font-semibold text-slate-600 transition hover:bg-slate-100 hover:text-slate-950" data-page="${link.page}">
       <i class="fa-solid ${link.icon} w-5 text-center"></i>
       <span>${link.label}</span>
     </button>
   `).join("");
+
+  const roleBadge = user?.role === "admin"
+    ? `<span class="rounded-full bg-indigo-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-indigo-700">Admin</span>`
+    : `<span class="rounded-full bg-cyan-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-cyan-700">Fournisseur</span>`;
 
   return `
     <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 -translate-x-full border-r border-slate-200 bg-white transition-transform duration-300 lg:translate-x-0">
@@ -21,7 +33,6 @@ export function renderSidebar() {
         </div>
         <div>
           <h1 class="text-lg font-extrabold tracking-tight text-slate-950">Gestion Appro</h1>
-         
         </div>
       </div>
 
@@ -29,7 +40,21 @@ export function renderSidebar() {
         ${items}
       </nav>
 
-      <div class="absolute bottom-5 w-full px-5">
+      <div class="absolute bottom-5 w-full px-5 space-y-3">
+        <!-- Info utilisateur connecté -->
+        <div class="rounded-3xl border border-slate-200 bg-slate-50 p-4">
+          <div class="flex items-center gap-3">
+            <div class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 to-cyan-500 text-white">
+              <i class="fa-solid fa-user text-xs"></i>
+            </div>
+            <div class="min-w-0 flex-1">
+              <p class="truncate text-sm font-bold text-slate-800">${user?.nom || user?.email || "Utilisateur"}</p>
+              <div class="mt-0.5">${roleBadge}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Statut API -->
         <div class="rounded-3xl border border-slate-200 bg-slate-50 p-4 text-xs text-slate-500">
           <div class="mb-2 flex items-center gap-2 font-semibold text-slate-700">
             <span class="h-2.5 w-2.5 rounded-full bg-emerald-500"></span>

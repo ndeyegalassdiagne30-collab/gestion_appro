@@ -10,92 +10,111 @@ import {
   getfournisseurs,
   updatefournisseurs,
 } from "../services/fournisseurService.js";
-// import { getCategories } from "../services/categorieService.js";
-// import { uploadProductImage } from "../services/cloudinaryService.js";
+import { createUser } from "../services/userService.js";
 
-function categorieFormBody(fournisseur , errors = {}) {
+function fournisseurFormBody(fournisseur, errors = {}) {
+  const isEdit = fournisseur !== null;
   return `
     <div>
-      <label class="mb-2 block text-xs font-extrabold uppercase tracking-[0.14em] text-slate-500" for="categorieLibelle">Nom</label>
-      <input class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100" type="text" id="categorieLibelle" value="${escapeHtml(fournisseur?.nom || "")}"autocomplete="off" />
-       <label class="mb-2 block text-xs font-extrabold uppercase tracking-[0.14em] text-slate-500" for="categorieLibelle">Email</label>
-      <input class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100" type="text" id="categorieLibelle" value="${escapeHtml(fournisseur?.email || "")}"autocomplete="off" />
-       <label class="mb-2 block text-xs font-extrabold uppercase tracking-[0.14em] text-slate-500" for="categorieLibelle">Telephone</label>
-      <input class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100" type="text" id="categorieLibelle" value="${escapeHtml(fournisseur?.telephone || "")}"autocomplete="off" />
-       <label class="mb-2 block text-xs font-extrabold uppercase tracking-[0.14em] text-slate-500" for="categorieLibelle">Adresse</label>
-      <input class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100" type="text" id="categorieLibelle" value="${escapeHtml(fournisseur?.adresse || "")}"autocomplete="off" />
-       <label class="mb-2 block text-xs font-extrabold uppercase tracking-[0.14em] text-slate-500" for="categorieLibelle">Type</label>
-      <input class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100" type="text" id="categorieLibelle" value="${escapeHtml(fournisseur?.type || "")}"autocomplete="off" />
-       <label class="mb-2 block text-xs font-extrabold uppercase tracking-[0.14em] text-slate-500" for="categorieLibelle">Date d'inscription</label>
-      <input class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100" type="text" id="categorieLibelle" value="${escapeHtml(fournisseur?.dateInscription || "")}"autocomplete="off" />
+      <!-- Nom -->
+      <div class="mb-4">
+        <label class="mb-2 block text-xs font-extrabold uppercase tracking-[0.14em] text-slate-500" for="fournisseurNom">Nom *</label>
+        <input class="w-full rounded-2xl border ${errors.nom ? 'border-rose-500' : 'border-slate-200'} bg-white px-4 py-3 text-sm font-medium text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
+          type="text" id="fournisseurNom" value="${escapeHtml(fournisseur?.nom || "")}" placeholder="ex: Dupont SARL" autocomplete="off" />
+        ${errors.nom ? `<p class="mt-1 text-xs font-semibold text-rose-500">${errors.nom}</p>` : ''}
+      </div>
+
+      <!-- Email -->
+      <div class="mb-4">
+        <label class="mb-2 block text-xs font-extrabold uppercase tracking-[0.14em] text-slate-500" for="fournisseurEmail">Email *</label>
+        <input class="w-full rounded-2xl border ${errors.email ? 'border-rose-500' : 'border-slate-200'} bg-white px-4 py-3 text-sm font-medium text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
+          type="email" id="fournisseurEmail" value="${escapeHtml(fournisseur?.email || "")}" placeholder="ex: contact@dupont.com" autocomplete="off" />
+        ${errors.email ? `<p class="mt-1 text-xs font-semibold text-rose-500">${errors.email}</p>` : ''}
+      </div>
+
+      <!-- Mot de passe (uniquement à la création) -->
+      ${!isEdit ? `
+      <div class="mb-4">
+        <label class="mb-2 block text-xs font-extrabold uppercase tracking-[0.14em] text-slate-500" for="fournisseurMotDePasse">Mot de passe *</label>
+        <input class="w-full rounded-2xl border ${errors.motDePasse ? 'border-rose-500' : 'border-slate-200'} bg-white px-4 py-3 text-sm font-medium text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
+          type="password" id="fournisseurMotDePasse" placeholder="••••••••" autocomplete="new-password" />
+        ${errors.motDePasse ? `<p class="mt-1 text-xs font-semibold text-rose-500">${errors.motDePasse}</p>` : ''}
+      </div>
+      ` : ''}
+
+      <!-- Téléphone -->
+      <div class="mb-4">
+        <label class="mb-2 block text-xs font-extrabold uppercase tracking-[0.14em] text-slate-500" for="fournisseurTelephone">Téléphone *</label>
+        <input class="w-full rounded-2xl border ${errors.telephone ? 'border-rose-500' : 'border-slate-200'} bg-white px-4 py-3 text-sm font-medium text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
+          type="text" id="fournisseurTelephone" value="${escapeHtml(fournisseur?.telephone || "")}" placeholder="ex: 06 12 34 56 78" autocomplete="off" />
+        ${errors.telephone ? `<p class="mt-1 text-xs font-semibold text-rose-500">${errors.telephone}</p>` : ''}
+      </div>
+
+      <!-- Adresse -->
+      <div class="mb-4">
+        <label class="mb-2 block text-xs font-extrabold uppercase tracking-[0.14em] text-slate-500" for="fournisseurAdresse">Adresse *</label>
+        <input class="w-full rounded-2xl border ${errors.adresse ? 'border-rose-500' : 'border-slate-200'} bg-white px-4 py-3 text-sm font-medium text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
+          type="text" id="fournisseurAdresse" value="${escapeHtml(fournisseur?.adresse || "")}" placeholder="ex: 12 rue de la Paix, Paris" autocomplete="off" />
+        ${errors.adresse ? `<p class="mt-1 text-xs font-semibold text-rose-500">${errors.adresse}</p>` : ''}
+      </div>
+
+      <!-- Type -->
+      <div class="mb-4">
+        <label class="mb-2 block text-xs font-extrabold uppercase tracking-[0.14em] text-slate-500" for="fournisseurType">Type *</label>
+        <input class="w-full rounded-2xl border ${errors.type ? 'border-rose-500' : 'border-slate-200'} bg-white px-4 py-3 text-sm font-medium text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
+          type="text" id="fournisseurType" value="${escapeHtml(fournisseur?.type || "")}" placeholder="ex: Grossiste" autocomplete="off" />
+        ${errors.type ? `<p class="mt-1 text-xs font-semibold text-rose-500">${errors.type}</p>` : ''}
+      </div>
+
+      <!-- Date d'inscription -->
+      <div class="mb-4">
+        <label class="mb-2 block text-xs font-extrabold uppercase tracking-[0.14em] text-slate-500" for="fournisseurDateInscription">Date d'inscription *</label>
+        <input class="w-full rounded-2xl border ${errors.dateInscription ? 'border-rose-500' : 'border-slate-200'} bg-white px-4 py-3 text-sm font-medium text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
+          type="date" id="fournisseurDateInscription" value="${escapeHtml(fournisseur?.dateInscription || "")}" />
+        ${errors.dateInscription ? `<p class="mt-1 text-xs font-semibold text-rose-500">${errors.dateInscription}</p>` : ''}
+      </div>
     </div>
   `;
 }
 
 async function openfournisseurForm(fournisseur = null) {
-  let fournisseurs = [];
-  try {
-    fournisseurs = await getCategories();
-  } catch (error) {
-    console.error('Erreur chargement des fournisseurs:', error);
-    showToast('Erreur lors du chargement des fournisseurs', 'error');
-  }
-
+  const isEdit = fournisseur !== null;
   let errors = {};
-  let currentfournisseur = fournisseur;
 
-  const modal = openModal({
-    title: fournisseur ? "Modifier le fournisseur" : "Nouveau fournisseur",
-    icon: "fa-tag",
+  openModal({
+    title: isEdit ? "Modifier le fournisseur" : "Nouveau fournisseur",
+    icon: "fa-truck",
     body: fournisseurFormBody(fournisseur, errors),
-    confirmLabel: fournisseur ? "Enregistrer" : "Créer",
+    confirmLabel: isEdit ? "Enregistrer" : "Créer",
     onConfirm: async (modalElement) => {
       errors = {};
-      
+
       const nom = modalElement.querySelector("#fournisseurNom").value;
       const email = modalElement.querySelector("#fournisseurEmail").value;
       const telephone = modalElement.querySelector("#fournisseurTelephone").value;
       const adresse = modalElement.querySelector("#fournisseurAdresse").value;
       const type = modalElement.querySelector("#fournisseurType").value;
       const dateInscription = modalElement.querySelector("#fournisseurDateInscription").value;
- 
+      const motDePasse = !isEdit
+        ? modalElement.querySelector("#fournisseurMotDePasse")?.value
+        : null;
 
       let hasErrors = false;
 
-      if (!nom.trim()) {
-        errors.nom = "Le nom est requis";
-        hasErrors = true;
-      }
-
-      if (!email.trim()) {
-        errors.email = "L'email est requis";
-        hasErrors = true;
-      }
-
-      if (!telephone.trim()) {
-        errors.telephone = "Le telephone est requis";
-        hasErrors = true;
-      }
-
-      if (!adresse.trim()) {
-        errors.adresse = "L'adresse est requise";
-        hasErrors = true;
-      }
-
-      if (!type.trim()) {
-        errors.type = "Le type est requis";
-        hasErrors = true;
-      }
-
-      if (!dateInscription.trim()) {
-        errors.dateInscription = "La date d'inscription est requise";
-        hasErrors = true;
-      }
+      if (!nom.trim()) { errors.nom = "Le nom est requis"; hasErrors = true; }
+      if (!email.trim()) { errors.email = "L'email est requis"; hasErrors = true; }
+      if (!isEdit && !motDePasse?.trim()) { errors.motDePasse = "Le mot de passe est requis"; hasErrors = true; }
+      if (!telephone.trim()) { errors.telephone = "Le téléphone est requis"; hasErrors = true; }
+      if (!adresse.trim()) { errors.adresse = "L'adresse est requise"; hasErrors = true; }
+      if (!type.trim()) { errors.type = "Le type est requis"; hasErrors = true; }
+      if (!dateInscription.trim()) { errors.dateInscription = "La date d'inscription est requise"; hasErrors = true; }
 
       if (hasErrors) {
         const bodyContainer = modalElement.querySelector('[data-modal-form]');
-        const newBody = fournisseurFormBody(currentfournisseur, errors);
-        bodyContainer.innerHTML = newBody;
+        bodyContainer.innerHTML = fournisseurFormBody(
+          { nom, email, telephone, adresse, type, dateInscription },
+          errors
+        );
         return false;
       }
 
@@ -109,16 +128,22 @@ async function openfournisseurForm(fournisseur = null) {
           dateInscription: dateInscription.trim(),
         };
 
-        if (fournisseur) {
-          await updatefournisseur(fournisseur.id, fournisseurData);
-          showToast("fournisseur modifié avec succès.");
+        if (isEdit) {
+          await updatefournisseurs(fournisseur.id, fournisseurData);
+          showToast("Fournisseur modifié avec succès.");
         } else {
-          await createfournisseur(fournisseurData);
-          showToast("fournisseur créé avec succès.");
+          const newFournisseur = await createfournisseurs(fournisseurData);
+          await createUser({
+            email: email.trim(),
+            motDePasse: motDePasse.trim(),
+            role: "fournisseur",
+            nom: nom.trim(),
+            fournisseurId: newFournisseur.id,
+          });
+          showToast("Fournisseur créé avec succès.");
         }
 
-        const currentPage = new URLSearchParams(window.location.search).get('page') || 'fournisseurs';
-        await navigate(currentPage);
+        await navigate("fournisseurs");
         return true;
       } catch (error) {
         showToast(error.message || "Erreur lors de l'opération", "error");
@@ -130,7 +155,7 @@ async function openfournisseurForm(fournisseur = null) {
 
 export async function renderfournisseursPage() {
   const app = document.getElementById("app");
-  
+
   let fournisseurs = [];
   try {
     fournisseurs = await getfournisseurs();
@@ -139,23 +164,11 @@ export async function renderfournisseursPage() {
     fournisseurs = [];
   }
 
-//   let categories = [];
-//   try {
-//     categories = await getCategories();
-//   } catch (error) {
-//     console.error('Erreur chargement catégories:', error);
-//   }
-
-//   const categorieMap = {};
-//   categories.forEach(cat => {
-//     categorieMap[cat.id] = cat.libelle;
-//   });
-
   app.innerHTML = `
     <section>
       ${pageHeader({
         kicker: "Référentiel",
-        title: "fournisseurs",
+        title: "Fournisseurs",
         subtitle: "Créer, modifier et supprimer les fournisseurs de l'application.",
         actionLabel: "Nouveau fournisseur",
         actionId: "addfournisseurBtn",
@@ -170,25 +183,25 @@ export async function renderfournisseursPage() {
           </div>
         </div>
 
-      ${renderTable({
+        ${renderTable({
           rows: fournisseurs,
-          emptyMessage: "Aucune fournisseur enregistrée.",
+          emptyMessage: "Aucun fournisseur enregistré.",
           columns: [
-            { label: "nom", render: (four) => `<strong class="font-bold text-slate-950">${escapeHtml(four.nom)}</strong>` },
-            { label: "email", render: (four) => `<strong class="font-bold text-slate-950">${escapeHtml(four.email)}</strong>` },
-            { label: "telephone", render: (four) => `<strong class="font-bold text-slate-950">${escapeHtml(four.telephone)}</strong>` },
-            { label: "adresse", render: (four) => `<strong class="font-bold text-slate-950">${escapeHtml(four.adresse)}</strong>` },
-            { label: "type", render: (four) => `<strong class="font-bold text-slate-950">${escapeHtml(four.type)}</strong>` },
-            { label: "dateInscription", render: (four) => `<strong class="font-bold text-slate-950">${escapeHtml(four.dateInscription)}</strong>` },
+            { label: "Nom", render: (four) => `<strong class="font-bold text-slate-950">${escapeHtml(four.nom)}</strong>` },
+            { label: "Email", render: (four) => `<span class="text-sm text-slate-600">${escapeHtml(four.email)}</span>` },
+            { label: "Téléphone", render: (four) => `<span class="text-sm text-slate-600">${escapeHtml(four.telephone)}</span>` },
+            { label: "Adresse", render: (four) => `<span class="text-sm text-slate-600">${escapeHtml(four.adresse)}</span>` },
+            { label: "Type", render: (four) => `<span class="inline-flex rounded-full bg-cyan-50 px-3 py-1 text-xs font-semibold text-cyan-700">${escapeHtml(four.type)}</span>` },
+            { label: "Date inscription", render: (four) => `<span class="text-sm text-slate-600">${escapeHtml(four.dateInscription)}</span>` },
             {
               label: "Actions",
               render: (four) => `
                 <div class="flex flex-wrap gap-2">
-                  <button class="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-extrabold text-slate-700 transition hover:bg-slate-50" data-edit="${escapeHtml(cat.id)}">
+                  <button class="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-extrabold text-slate-700 transition hover:bg-slate-50" data-edit="${escapeHtml(four.id)}">
                     <i class="fa-solid fa-pen"></i>
                     Modifier
                   </button>
-                  <button class="inline-flex items-center gap-1.5 rounded-xl bg-rose-600 px-3 py-2 text-xs font-extrabold text-white transition hover:bg-rose-700" data-delete="${escapeHtml(cat.id)}">
+                  <button class="inline-flex items-center gap-1.5 rounded-xl bg-rose-600 px-3 py-2 text-xs font-extrabold text-white transition hover:bg-rose-700" data-delete="${escapeHtml(four.id)}">
                     <i class="fa-solid fa-trash"></i>
                     Supprimer
                   </button>
@@ -217,15 +230,13 @@ function bindfournisseurEvents(fournisseurs) {
   document.querySelectorAll("[data-delete]").forEach((button) => {
     button.addEventListener("click", () => {
       const id = button.dataset.delete;
-
       openConfirm({
         message: "Voulez-vous supprimer ce fournisseur ?",
         onConfirm: async () => {
           try {
-            await deletefournisseur(id);
-            showToast("fournisseur supprimé.");
-            const currentPage = new URLSearchParams(window.location.search).get('page') || 'fournisseurs';
-            await navigate(currentPage);
+            await deletefournisseurs(id);
+            showToast("Fournisseur supprimé.");
+            await navigate("fournisseurs");
           } catch (error) {
             showToast(error.message, "error");
           }
