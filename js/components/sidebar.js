@@ -37,34 +37,34 @@ export function renderSidebar() {
       </div>
 
       <nav class="grid gap-2 px-4 pb-4" aria-label="Navigation principale">
-        ${items}
+      ${items}
       </nav>
 
       <div class="absolute bottom-5 w-full px-5 space-y-3">
-        <!-- Info utilisateur connecté -->
-        <div class="rounded-3xl border border-slate-200 bg-slate-50 p-4">
-          <div class="flex items-center gap-3">
-            <div class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 to-cyan-500 text-white">
-              <i class="fa-solid fa-user text-xs"></i>
-            </div>
-            <div class="min-w-0 flex-1">
-              <p class="truncate text-sm font-bold text-slate-800">${user?.nom || user?.email || "Utilisateur"}</p>
-              <div class="mt-0.5">${roleBadge}</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Statut API -->
-        <div class="rounded-3xl border border-slate-200 bg-slate-50 p-4 text-xs text-slate-500">
-          <div class="mb-2 flex items-center gap-2 font-semibold text-slate-700">
-            <span class="h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
-            API JSON Server
-          </div>
-          <code class="rounded-lg bg-white px-2 py-1 text-[11px] text-slate-700">localhost:3000</code>
-        </div>
+      <!-- Info utilisateur connecté -->
+      <div class="rounded-3xl border border-slate-200 bg-slate-50 p-4">
+      <div class="flex items-center gap-3">
+      <div class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 to-cyan-500 text-white">
+      <i class="fa-solid fa-user text-xs"></i>
       </div>
+      <div class="min-w-0 flex-1">
+      <p class="truncate text-sm font-bold text-slate-800">${user?.nom || user?.email || "Utilisateur"}</p>
+      <div class="mt-0.5">${roleBadge}</div>
+      </div>
+      </div>
+     </div>
+
+ <!-- Statut API -->
+  // <div class="rounded-3xl border border-slate-200 bg-slate-50 p-4 text-xs text-slate-500">
+  // <div class="mb-2 flex items-center gap-2 font-semibold text-slate-700">
+  // <span class="h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
+  API JSON Server
+  </div>
+  <code class="rounded-lg bg-white px-2 py-1 text-[11px] text-slate-700">localhost:3000</code>
+  </div>
+  </div>
     </aside>
 
-    <div id="sidebarOverlay" class="fixed inset-0 z-30 hidden bg-slate-950/40 backdrop-blur-sm lg:hidden"></div>
-  `;
+     <div id="sidebarOverlay" class="fixed inset-0 z-30 hidden bg-slate-950/40 backdrop-blur-sm lg:hidden"></div>
+   `;
 }

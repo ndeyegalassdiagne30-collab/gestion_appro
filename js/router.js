@@ -15,11 +15,11 @@ const titles = {
   produits: "Produits",
   fournisseurs: "Fournisseurs",
 };
-
+//Détermine la page par défaut affichée après la connexion
 function getDefaultPage() {
   return isAdmin() ? "categories" : "produits";
 }
-
+//Vérifie si un utilisateur a le droit d'accéder à une page spécifique
 function isPageAllowed(page) {
   if (isAdmin()) 
     return true;

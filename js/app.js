@@ -32,7 +32,7 @@ function initSidebar() {
 
   return { close };
 }
-
+//fonction qui initialise la navigation de l'application
 function initNavigation(sidebar) {
   document.querySelectorAll("[data-page]").forEach((button) => {
     button.addEventListener("click", async () => {
