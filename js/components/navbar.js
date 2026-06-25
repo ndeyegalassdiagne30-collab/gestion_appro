@@ -19,14 +19,6 @@ export function renderNavbar() {
       </div>
 
       <div class="flex items-center gap-3">
-        <!-- Nom utilisateur (masqué sur mobile) -->
-        <span class="hidden text-sm font-semibold text-slate-600 sm:block">${user?.nom || user?.email || ""}</span>
-
-        <!-- Avatar -->
-        <div class="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 to-cyan-500 text-xs font-black text-white">
-          ${initiales}
-        </div>
-
         <!-- Bouton déconnexion -->
         <button
           id="logoutBtn"

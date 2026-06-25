@@ -101,13 +101,19 @@ async function openfournisseurForm(fournisseur = null) {
 
       let hasErrors = false;
 
-      if (!nom.trim()) { errors.nom = "Le nom est requis"; hasErrors = true; }
-      if (!email.trim()) { errors.email = "L'email est requis"; hasErrors = true; }
-      if (!isEdit && !motDePasse?.trim()) { errors.motDePasse = "Le mot de passe est requis"; hasErrors = true; }
-      if (!telephone.trim()) { errors.telephone = "Le téléphone est requis"; hasErrors = true; }
-      if (!adresse.trim()) { errors.adresse = "L'adresse est requise"; hasErrors = true; }
+      if (!nom.trim()) { errors.nom = "Le nom est requis";
+         hasErrors = true; }
+      if (!email.trim()) { errors.email = "L'email est requis";
+         hasErrors = true; }
+      if (!isEdit && !motDePasse?.trim()) { errors.motDePasse = "Le mot de passe est requis";
+         hasErrors = true; }
+      if (!telephone.trim()) { errors.telephone = "Le téléphone est requis";
+         hasErrors = true; }
+      if (!adresse.trim()) { errors.adresse = "L'adresse est requise";
+         hasErrors = true; }
       if (!type.trim()) { errors.type = "Le type est requis"; hasErrors = true; }
-      if (!dateInscription.trim()) { errors.dateInscription = "La date d'inscription est requise"; hasErrors = true; }
+      if (!dateInscription.trim()) { errors.dateInscription = "La date d'inscription est requise";
+         hasErrors = true; }
 
       if (hasErrors) {
         const bodyContainer = modalElement.querySelector('[data-modal-form]');

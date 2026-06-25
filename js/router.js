@@ -21,8 +21,10 @@ function getDefaultPage() {
 }
 
 function isPageAllowed(page) {
-  if (isAdmin()) return true;
-  if (isFournisseur()) return page === "produits";
+  if (isAdmin()) 
+    return true;
+  if (isFournisseur()) 
+    return page === "produits";
   return false;
 }
 
