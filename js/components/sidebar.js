@@ -54,14 +54,7 @@ export function renderSidebar() {
       </div>
      </div>
 
- <!-- Statut API -->
-  // <div class="rounded-3xl border border-slate-200 bg-slate-50 p-4 text-xs text-slate-500">
-  // <div class="mb-2 flex items-center gap-2 font-semibold text-slate-700">
-  // <span class="h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
-  API JSON Server
-  </div>
-  <code class="rounded-lg bg-white px-2 py-1 text-[11px] text-slate-700">localhost:3000</code>
-  </div>
+
   </div>
     </aside>
 
