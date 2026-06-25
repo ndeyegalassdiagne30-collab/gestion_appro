@@ -50,6 +50,7 @@ export function renderSidebar() {
       <div class="min-w-0 flex-1">
       <p class="truncate text-sm font-bold text-slate-800">${user?.nom || user?.email || "Utilisateur"}</p>
       <div class="mt-0.5">${roleBadge}</div>
+      <i class="fa-solid fa-right-from-bracket"></i>
       </div>
       </div>
      </div>
